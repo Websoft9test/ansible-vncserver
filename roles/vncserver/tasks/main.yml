@@ -19,7 +19,7 @@
     mode: '0750'
 
 - name: Start vncpasswd.sh
-  shell: source /tmp/vncpasswd.sh 2>&1
+  shell: . /tmp/vncpasswd.sh 
 
 # Delete vnc cache
 - name:
