@@ -35,7 +35,7 @@
   shell: | 
     rm -rf /tmp/.X*
 #    pkill -9 vnc
-    rm -rf /home/vnc/.vnc/*pid
+    rm -rf /home/vnc/.vnc/*.pid
     rm -rf /home/vnc/.vnc/*.log
   
 # configure and start vncserver.service
