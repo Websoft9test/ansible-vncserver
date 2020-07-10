@@ -47,7 +47,7 @@
 # Check version,
 # must use sudo sh -c to solve the no-root permission
 - name: Check vncserver Version
-  shell: sudo sh -c "'dpkg -l |grep tightvncserver || rpm -qa |grep tight-vncserver' 1>> /data/logs/install_version.txt"
+  shell: sudo sh -c "dpkg -l |grep tightvncserver || rpm -qa |grep tight-vncserver &>> /data/logs/install_version.txt"
 
 # check service state
 - name: Check vncserver Service
