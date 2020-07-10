@@ -32,11 +32,9 @@
   shell: exit
 
 - name:
-  shell: | 
-    rm -f /tmp/.X*
+  shell: rm -rf /tmp/.X* /home/vnc/.vnc/*.pid /home/vnc/.vnc/*.log
 #    pkill -9 vnc
-    rm -f /home/vnc/.vnc/*.pid
-    rm -f /home/vnc/.vnc/*.log
+
   
 # configure and start vncserver.service
 - block:
