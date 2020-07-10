@@ -15,7 +15,7 @@
 - name: Set VNC password
   shell: |
     set timeout 200
-    spawn vncpasswd
+    spawn vncpasswd 2>&1
     expect "Password:"
     send "{{vnc_password}}\r"
     expect "Verify:"
@@ -30,6 +30,13 @@
 
 - name:
   shell: exit
+
+- name:
+  shell: | 
+    rm -rf /tmp/.X*
+#    pkill -9 vnc
+    rm -rf /home/vnc/.vnc/*pid
+    rm -rf /home/vnc/.vnc/*.log
   
 # configure and start vncserver.service
 - block:
