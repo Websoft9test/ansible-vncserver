@@ -1,0 +1,37 @@
+  
+# 核心任务
+
+- name: VNCSERVER
+  hosts: all
+  become: yes
+  become_method: sudo
+
+  vars_files:
+    - vars/main.yml
+  
+  vars_prompt:
+    - name: 'vncserver_selection'
+      prompt: "Choose the VNCSERVER distribution \n
+      1: VNCSERVER 5 Classic\n
+      2: VNCSERVER Artemis\n"
+      private: no
+      default: 1
+
+  vars:
+    vncserver_select:
+      '1': "classic"
+      '2': "artemis"
+
+    vncserver_distribution: "{{vncserver_select[vncserver_selection]}}"
+  
+  pre_tasks:
+    - debug:
+        msg: Will install {{vncserver_distribution}}
+
+  roles:
+    - {role: role_common, tags: "role_common"}  
+    - {role: role_cloud, tags: "role_cloud"}  
+    - {role: role_jdk, tags: "role_jdk"}  
+    - {role: vncserver, tags: "vncserver"}
+    - {role: role_preend, tags: "preend"}
+    - {role: role_end, tags: "role_end"}
