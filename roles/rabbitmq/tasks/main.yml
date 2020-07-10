@@ -1,13 +1,13 @@
-# install RabbitMQ by OS_family
+# install VNCSERVER by OS_family
 - name: Install this role on {{ansible_os_family}}
   include: "{{ansible_os_family}}.yml"
 
-# configure RabbitMQ
+# configure VNCSERVER
 ## set environment variable
 - block:
   - name: Copy jdk_env to /etc/profile.d
     template:
-      src: rabbitmq_env.sh
+      src: vncserver_env.sh
       dest: '/etc/profile.d'
       mode: 0640
       
@@ -19,95 +19,95 @@
       export ORACLE_SID=XE
       export PATH=$PATH:$ORACLE_HOME/bin
 
-- name: Create rabbitmq User
+- name: Create vncserver User
   user:
-    name: rabbitmq
+    name: vncserver
     shell: /usr/sbin/nologin
-    home: /data/wwwroot/rabbitmq
+    home: /data/wwwroot/vncserver
     create_home: no
 
-- name: Create rabbitmq directory
+- name: Create vncserver directory
   file:
-    path: /data/wwwroot/rabbitmq
+    path: /data/wwwroot/vncserver
     state: directory
-    owner: rabbitmq
-    group: rabbitmq
+    owner: vncserver
+    group: vncserver
     
-- name: Download rabbitmq
+- name: Download vncserver
   get_url:
-    dest: /data/wwwroot/rabbitmq
-    url: "{{rabbitmq_download_url}}"
-    owner: rabbitmq
-    group: rabbitmq
+    dest: /data/wwwroot/vncserver
+    url: "{{vncserver_download_url}}"
+    owner: vncserver
+    group: vncserver
 
-- name: Set rabbitmq config
+- name: Set vncserver config
   template:
-    src: rabbitmq.conf.jinja2
-    dest: /data/wwwroot/rabbitmq/rabbitmq.conf
-    owner: rabbitmq
-    group: rabbitmq
+    src: vncserver.conf.jinja2
+    dest: /data/wwwroot/vncserver/vncserver.conf
+    owner: vncserver
+    group: vncserver
 
-- name: Setting rabbitmq service
+- name: Setting vncserver service
   copy:
-    src: rabbitmq.service
-    dest: /lib/systemd/system/rabbitmq.service
+    src: vncserver.service
+    dest: /lib/systemd/system/vncserver.service
 
-- name: Restart rabbitmq
+- name: Restart vncserver
   service:
-    name: rabbitmq.service
+    name: vncserver.service
     state: restarted
     enabled: yes
 
-- name: Create rabbitmq System User
+- name: Create vncserver System User
   user:
-      name: rabbitmq 
+      name: vncserver 
       create_home: no 
-      home: /opt/rabbitmq
+      home: /opt/vncserver
       shell: /usr/sbin/nologin
 
-- name: Download rabbitmq
+- name: Download vncserver
   unarchive:
-      src: "{{rabbitmq_download_url}}"
+      src: "{{vncserver_download_url}}"
       dest: /opt/ 
-      group: rabbitmq 
+      group: vncserver 
       remote_src: yes
-      owner: rabbitmq
+      owner: vncserver
       mode: g+w
 
 - name: Create the storage directory for files.
   file:
-      path: /opt/rabbitmq/data
+      path: /opt/vncserver/data
       state: directory 
-      owner: rabbitmq 
-      group: rabbitmq
+      owner: vncserver 
+      group: vncserver
       mode: g+w
       
-- name: Set database connection /opt/rabbitmq/config/config.json
+- name: Set database connection /opt/vncserver/config/config.json
   lineinfile:
-    dest: /opt/rabbitmq/config/config.json
+    dest: /opt/vncserver/config/config.json
     regexp: '"DataSource":'
-    line: '    "DataSource": "{{rabbitmq_db_user}}:{{rabbitmq_db_password}}@tcp(localhost:3306)/{{rabbitmq_db_name}}?charset=utf8mb4,utf8&readTimeout=30s&writeTimeout=30s",'
+    line: '    "DataSource": "{{vncserver_db_user}}:{{vncserver_db_password}}@tcp(localhost:3306)/{{vncserver_db_name}}?charset=utf8mb4,utf8&readTimeout=30s&writeTimeout=30s",'
     backrefs: yes 
 
 # set soft link, -f enforce the exist links
 # ln -sf src des
 - name: set soft link
   shell: |
-    ln -sf /opt/rabbitmq  /data/wwwroot
-    ln -sf /opt/rabbitmq/config /data/config
+    ln -sf /opt/vncserver  /data/wwwroot
+    ln -sf /opt/vncserver/config /data/config
 
 # Check version,
 # must use sudo sh -c to solve the no-root permission
 - block:
-  - name: Check RabbitMQ Version
-    shell: sudo sh -c "rabbitmqctl status | grep 'RabbitMQ version' 1>> /data/logs/install_version.txt"
+  - name: Check VNCSERVER Version
+    shell: sudo sh -c "vncserverctl status | grep 'VNCSERVER version' 1>> /data/logs/install_version.txt"
 
   - name: Check Erlang Version
     shell: sudo sh -c 'echo "Erlang $(yum info erlang | grep Version | sed -n 1p)" 1>> /data/logs/install_version.txt'
     when: ansible_os_family=="RedHat"
 
 # check service state
-- name: Check RabbitMQ Service
-  shell: systemctl status rabbitmq | grep Active*
-  register: check_rabbitmq_service
-  notify: check_rabbitmq_service
+- name: Check VNCSERVER Service
+  shell: systemctl status vncserver | grep Active*
+  register: check_vncserver_service
+  notify: check_vncserver_service
