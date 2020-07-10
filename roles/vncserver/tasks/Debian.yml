@@ -2,5 +2,5 @@
 - name: Install tightvncserver
   apt: 
     update_cache: yes
-    name: tightvncserver
+    name: [tightvncserver,expect]
     
