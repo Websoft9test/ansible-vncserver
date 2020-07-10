@@ -9,6 +9,7 @@
     home: /home/vnc
     create_home: yes
 
+# copy and start vncpasswd.sh 
 - name: Copy vncpasswd.sh
   copy:
     src:  vncpasswd.sh
@@ -20,11 +21,11 @@
 - name: Start vncpasswd.sh
   shell: source /tmp/vncpasswd.sh
 
+# Delete vnc cache
 - name:
-  shell: rm -rf /tmp/.X* /home/vnc/.vnc/*.pid /home/vnc/.vnc/*.log
+  shell: rm -rf /tmp/.X* /home/vnc/.vnc/*.pid /home/vnc/.vnc/*.log /tmp/vncpasswd.sh
 #    pkill -9 vnc
 
-  
 # configure and start vncserver.service
 - block:
   - name: Setting vncserver service
@@ -46,7 +47,7 @@
 # Check version,
 # must use sudo sh -c to solve the no-root permission
 - name: Check vncserver Version
-  shell: sudo sh -c "dpkg -l |grep tightvncserver || rpm -qa |grep tightvncserver 1>> /data/logs/install_version.txt"
+  shell: sudo sh -c "'dpkg -l |grep tightvncserver || rpm -qa |grep tight-vncserver' 1>> /data/logs/install_version.txt"
 
 # check service state
 - name: Check vncserver Service
