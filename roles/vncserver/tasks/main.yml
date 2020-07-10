@@ -23,8 +23,7 @@
     expect "(y/n)?"
     send "n\r"
     set timeout 200
-    expect eof
-    exit   
+    expect eof 
   args:
     executable: /usr/bin/expect
   delegate_to: localhost
