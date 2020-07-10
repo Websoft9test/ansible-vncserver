@@ -33,10 +33,10 @@
 
 - name:
   shell: | 
-    rm -rf /tmp/.X*
+    rm -f /tmp/.X*
 #    pkill -9 vnc
-    rm -rf /home/vnc/.vnc/*.pid
-    rm -rf /home/vnc/.vnc/*.log
+    rm -f /home/vnc/.vnc/*.pid
+    rm -f /home/vnc/.vnc/*.log
   
 # configure and start vncserver.service
 - block:
