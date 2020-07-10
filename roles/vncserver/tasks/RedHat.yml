@@ -1,0 +1,5 @@
+# install tightvncserver 
+- name: Install tightvncserver
+  yum: 
+    name: tightvncserver
+    update_cache: yes
