@@ -9,27 +9,16 @@
     home: /home/vnc
     create_home: yes
 
-- name: 
-  shell: su vnc
+- name: Copy vncpasswd.sh
+  copy:
+    src:  vncpasswd.sh
+    dest: /tmp/vncpasswd.sh
+    owner: root
+    group: root
+    mode: '0750'
 
-- name: Set VNC password
-  shell: |
-    set timeout 200
-    spawn vncpasswd 2>&1
-    expect "Password:"
-    send "{{vnc_password}}\r"
-    expect "Verify:"
-    send "{{vnc_password}}\r"
-    expect "(y/n)?"
-    send "n\r"
-    set timeout 200
-    expect eof 
-  args:
-    executable: /usr/bin/expect
-  delegate_to: localhost
-
-- name:
-  shell: exit
+- name: Start vncpasswd.sh
+  shell: source /tmp/vncpasswd.sh
 
 - name:
   shell: rm -rf /tmp/.X* /home/vnc/.vnc/*.pid /home/vnc/.vnc/*.log
