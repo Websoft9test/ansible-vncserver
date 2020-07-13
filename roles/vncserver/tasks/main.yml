@@ -14,8 +14,6 @@
   copy:
     src:  vncpasswd.sh
     dest: /tmp/vncpasswd.sh
-    owner: root
-    group: root
     mode: '0750'
 
 - name: Start vncpasswd.sh
