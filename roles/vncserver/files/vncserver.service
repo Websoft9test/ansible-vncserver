@@ -9,9 +9,9 @@ Group=vnc
 WorkingDirectory=/home/vnc
 
 PIDFile=/home/vnc/.vnc/%H:1.pid
-ExecStartPre=-/usr/bin/vncserver -kill :1 > /dev/null 2>&1
+ExecStartPre=-/usr/bin/vncserver -kill :* > /dev/null 2>&1
 ExecStart=/usr/bin/vncserver :1
-ExecStop=/usr/bin/vncserver -kill :1
+ExecStop=/usr/bin/vncserver -kill :*
 
 [Install]
 WantedBy=multi-user.target
