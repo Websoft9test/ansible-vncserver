@@ -23,8 +23,8 @@
 
 # Delete vnc cache
 - name:
-  shell: rm -rf /home/vnc/.vnc/*.pid /home/vnc/.vnc/*.log /tmp/vncpasswd.sh
-#    pkill -9 vnc    rm -rf /tmp/.X*
+  shell: rm -rf /home/vnc/.vnc/*.pid /home/vnc/.vnc/*.log /tmp/vncpasswd.sh /tmp/.X*
+#    pkill -9 vnc   
 
 # configure and start vncserver.service
 - block:
