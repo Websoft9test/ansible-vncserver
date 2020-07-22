@@ -4,6 +4,14 @@
     yum:
       name: tigervnc-server
     when: ansible_os_family == "RedHat"
+  
+  - name: Install VNC Server on {{ansible_os_family}}
+    apt:
+      pkg:
+        - tigervnc-standalone-server
+        - tigervnc-common
+        - tigervnc-xorg-extension
+    when: ansible_os_family == "Debian"
 
   - name: Create a random password for VNC
     set_fact: temp_password="{{ lookup('password', '/tmp/passwordfile length=8 chars=digits') }}"
