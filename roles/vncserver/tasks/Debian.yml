@@ -1,6 +1,0 @@
-# install tightvncserver 
-- name: Install tightvncserver
-  apt: 
-    update_cache: yes
-    name: [tightvncserver,expect]
-    

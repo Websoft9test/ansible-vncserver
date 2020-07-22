@@ -1,52 +1,44 @@
-# install VNCSERVER by OS_family
-- name: Install this role on {{ansible_os_family}}
-  include: "{{ansible_os_family}}.yml"
-
-- name: Create vncserver System User
-  user:
-    name: vnc
-    shell: /bin/bash
-    home: /home/vnc
-    create_home: yes
-
-# copy and start vncpasswd.sh 
-- name: Copy vncpasswd.sh
-  copy:
-    src:  vncpasswd.sh
-    dest: /tmp/vncpasswd.sh
-    mode: '0750'
-
-- name: Start vncpasswd.sh
-  shell: . /tmp/vncpasswd.sh 
-
-# Delete vnc cache
-- name:
-  shell: rm -rf /home/vnc/.vnc/*.pid /home/vnc/.vnc/*.log /tmp/vncpasswd.sh /tmp/.X*
-#    pkill -9 vnc   
-
-# configure and start vncserver.service
+# setting password for vncserver
 - block:
-  - name: Setting vncserver service
-    copy:
-      src: vncserver.service
-      dest: /lib/systemd/system/vncserver.service
+  - name: Install VNC Server on {{ansible_os_family}}
+    yum:
+      name: tigervnc-server
+    when: ansible_os_family == "RedHat"
 
-  - name: Restart vncserver
-    service:
-      name: vncserver
-      state: restarted
-      enabled: yes
+  - name: Create a random password for VNC
+    set_fact: temp_password="{{ lookup('password', '/tmp/passwordfile length=8 chars=digits') }}"
+
+  - debug:
+      msg: Testing VNC password is {{ temp_password }}
+
+  - name: delete tmp/passwordfile
+    shell: rm -rf /tmp/passwordfile
+
+  - name: vnc password
+    expect:
+      command: vncpasswd
+      responses:
+        "Password": "{{temp_password}}"
+        "Verify": "{{temp_password}}"
+        "view-only": "n"
+
+# vncserver configure
+- name: Copy vncserver.service 
+  template: 
+    src: vncserver.service.j2
+    dest: /lib/systemd/system/splunk.service
+    
+- name: Restart vncserver
+  service:
+    name: vncserver
+    state: restarted
+    enabled: yes
 
 # set soft link, -f enforce the exist links
 # ln -sf src des
 - name: set soft link
   shell: ln -sf /lib/systemd/system/vncserver.service /lib/systemd/system/vnc.service
     
-# Check version,
-# must use sudo sh -c to solve the no-root permission
-- name: Check vncserver Version
-  shell: sudo sh -c "dpkg -l |grep tightvncserver || rpm -qa |grep tight-vncserver &>> /data/logs/install_version.txt"
-
 # check service state
 - name: Check vncserver Service
   shell: systemctl status vncserver | grep Active*
