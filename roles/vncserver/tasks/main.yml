@@ -27,13 +27,13 @@
   template: 
     src: vncserver.service1.j2
     dest: /lib/systemd/system/vncserver.service
-    when: when: ansible_user == "root"
+    when: ansible_user == "root"
 
  - name: Copy vncserver.service 
   template: 
     src: vncserver.service2.j2
     dest: /lib/systemd/system/vncserver.service
-    when: when: ansible_user ! == "root"   
+    when: ansible_user ! == "root"   
 
 - name: Restart vncserver
   service:
