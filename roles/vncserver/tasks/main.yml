@@ -22,7 +22,7 @@
   - name: delete tmp/passwordfile
     shell: rm -rf /tmp/passwordfile
 
-  - name: Configure vnc_password xstartup config
+  - name: Configure vncserver password
     expect:
       command: vncserver
       responses:
