@@ -35,12 +35,14 @@
   copy:
     src:  config
     dest: $HOME/.vnc/config
+    mode: 640
   when: ansible_os_family == "Debian"
 
 - name: Copy vncserver xstartup
   copy:
     src: xstartup
     dest: $HOME/.vnc/config
+    mode: 750
   when: ansible_os_family == "Debian"
 
 # vncserver configure
