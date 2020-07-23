@@ -24,7 +24,7 @@
 
   - name: Configure vnc_password xstartup config
     expect:
-      command: vncserver
+      command: vncpasswd
       responses:
         "Password": "{{temp_password}}"
         "Verify": "{{temp_password}}"
