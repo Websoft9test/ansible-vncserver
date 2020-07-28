@@ -1,8 +1,8 @@
 - name: Install GNOME Desktop
   shell: |
-    apt install -y gnome-shell ubuntu-gnome-desktop
-    apt install -y unity-tweak-tool gnome-tweak-tool
-    dpkg-reconfigure lightdm
+    apt install gdm3 -y
+    tasksel install ubuntu-desktop
+    systemctl restart gdm3
   when: os_gui=="gnome"
 
 - name: Install KDE Desktop
@@ -14,7 +14,7 @@
   
 - name: Install Xfce Desktop
   shell: |
-    apt install -y xfce4 xfce4-goodies
+    apt install xfce4 xfce4-goodies -y
   when: os_gui=="xfce"
 
 - name: Config Desktop
