@@ -1,0 +1,75 @@
+# setting password for vncserver
+- block:
+  - name: Install VNC Server on {{ansible_os_family}}
+    yum:
+      name: tigervnc-server
+    when: ansible_os_family == "RedHat"
+  
+  - name: Install VNC Server on {{ansible_os_family}}
+    apt:
+      pkg:
+        - tigervnc-standalone-server
+        - tigervnc-common
+        - tigervnc-xorg-extension
+    when: ansible_os_family == "Debian"
+
+  - name: Create a random password for VNC
+    set_fact: temp_password="{{ lookup('password', '/tmp/passwordfile length=8 chars=digits') }}"
+
+  - debug:
+      msg: Testing VNC password is {{ temp_password }}
+
+  - name: delete tmp/passwordfile
+    shell: rm -rf /tmp/passwordfile
+
+  - name: Configure vncserver password
+    expect:
+      command: vncpasswd
+      responses:
+        "Password": "{{temp_password}}"
+        "Verify": "{{temp_password}}"
+        "view-only": "n"
+
+# copy config and xstartup on ubuntu
+- name: Copy vncserver config
+  copy:
+    src:  config
+    dest: $HOME/.vnc/config
+  when: ansible_os_family == "Debian"
+
+- name: Copy vncserver xstartup
+  copy:
+    src: xstartup
+    dest: $HOME/.vnc/xstartup
+    mode: 750
+  when: ansible_os_family == "Debian"
+
+# vncserver configure
+- name: Copy vncserver.service(when system_user=root) 
+  template: 
+    src: vncserver.service1.j2
+    dest: /lib/systemd/system/vncserver.service
+  when: ansible_user == "root"
+
+- name: Copy vncserver.service(when system_user=other) 
+  template: 
+    src: vncserver.service2.j2
+    dest: /lib/systemd/system/vncserver.service
+  when: ansible_user != "root"   
+
+- name: Restart vncserver
+  service:
+    name: vncserver
+    state: restarted
+    enabled: yes
+
+# set soft link, -f enforce the exist links
+# ln -sf src des
+- name: set soft link
+  shell: ln -sf /lib/systemd/system/vncserver.service /lib/systemd/system/vnc.service
+    
+# check service state
+- name: Check vncserver Service
+  shell: systemctl status vncserver | grep Active*
+  register: check_vncserver_service
+  notify: check_vncserver_service
