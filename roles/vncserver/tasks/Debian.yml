@@ -6,11 +6,7 @@
   when: os_gui=="gnome"
 
 - name: Install KDE Desktop
-  shell: |
-    apt install sddm
-    apt install tasksel
-    tasksel install kubuntu-desktop
-    dpkg-reconfigure sddm
+  shell: apt install plasma-desktop -y
   when: os_gui=="kde"
   
 - name: Install Xfce Desktop
