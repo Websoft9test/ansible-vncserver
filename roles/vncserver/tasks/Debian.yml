@@ -4,7 +4,7 @@
     apt install tasksel
     tasksel install ubuntu-desktop
     systemctl restart gdm3
-    dpkg-reconfigure sddm
+    dpkg-reconfigure gdm3
   when: os_gui=="gnome"
 
 - name: Install KDE Desktop
