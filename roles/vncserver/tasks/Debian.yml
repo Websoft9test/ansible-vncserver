@@ -1,5 +1,6 @@
 - name: Install GNOME Desktop
   shell: |
+    apt-get install gdm
     apt-get install gnome-session-flashback -y
     apt install ubuntu-desktop gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal -y
   when: os_gui=="gnome"
