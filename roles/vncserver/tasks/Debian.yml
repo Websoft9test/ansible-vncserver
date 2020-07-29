@@ -1,15 +1,16 @@
 - name: Install GNOME Desktop
   shell: |
     apt install gdm3 -y
+    apt install tasksel
     tasksel install ubuntu-desktop
     systemctl restart gdm3
   when: os_gui=="gnome"
 
 - name: Install KDE Desktop
   shell: |
+    apt install sddm
     apt install tasksel
     tasksel install kubuntu-desktop
-    apt install sddm
   when: os_gui=="kde"
   
 - name: Install Xfce Desktop
