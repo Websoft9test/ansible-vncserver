@@ -1,8 +1,9 @@
 - name: Install GNOME Desktop
   shell: |
-    apt-get install gdm
+    apt-get install gdm3
     apt-get install gnome-session-flashback -y
     apt install ubuntu-desktop gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal -y
+    dpkg-reconfigure gdm3
   when: os_gui=="gnome"
 
 - name: Install KDE Desktop
@@ -11,6 +12,7 @@
     apt-get update
     apt install sddm 
     apt-get install kubuntu-desktop -y
+    dpkg-reconfigure sddm
   when: os_gui=="kde"
   
 - name: Install Xfce Desktop
