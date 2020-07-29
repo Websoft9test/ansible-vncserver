@@ -1,10 +1,8 @@
 - name: Install GNOME Desktop
   shell: |
-    apt install gdm3 -y
-    apt install tasksel
-    tasksel install ubuntu-desktop
-    systemctl restart gdm3
-    dpkg-reconfigure gdm3
+    apt install -y gnome-shell ubuntu-gnome-desktop
+    apt install -y unity-tweak-tool gnome-tweak-tool
+    dpkg-reconfigure lightdm
   when: os_gui=="gnome"
 
 - name: Install KDE Desktop
