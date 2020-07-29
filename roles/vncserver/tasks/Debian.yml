@@ -6,7 +6,10 @@
   when: os_gui=="gnome"
 
 - name: Install KDE Desktop
-  shell: apt install plasma-desktop -y
+  shell: |
+    add-apt-repository ppa:kubuntu-ppa/backports -y
+    apt-get update
+    apt-get install kubuntu-desktop -y
   when: os_gui=="kde"
   
 - name: Install Xfce Desktop
