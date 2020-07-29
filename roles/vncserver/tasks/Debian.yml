@@ -1,8 +1,7 @@
 - name: Install GNOME Desktop
   shell: |
-    apt install gdm3 -y
-    tasksel install ubuntu-desktop
-    systemctl restart gdm3
+    apt-get install gnome-session-flashback -y
+    apt install ubuntu-desktop gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal -y
   when: os_gui=="gnome"
 
 - name: Install KDE Desktop
