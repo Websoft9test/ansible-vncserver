@@ -11,8 +11,8 @@
     add-apt-repository ppa:kubuntu-ppa/backports -y
     apt update && apt upgrade -y
     apt install plasma-desktop -y
-    apt install kde-full
-    apt install kde-standard
+    apt install kde-full -y
+    apt install kde-standard -y
   when: os_gui=="kde"
   
 - name: Install Xfce Desktop
