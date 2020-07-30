@@ -8,9 +8,12 @@
 
 - name: Install KDE Desktop
   shell: |
-    apt install sddm -y
-    dpkg-reconfigure sddm
-    tasksel install kubuntu-desktop -y
+    add-apt-repository ppa:kubuntu-ppa/backports
+    apt update && upgrade
+    apt install plasma-desktop
+    apt install kde-full
+    apt install kde-standard
+    apt full-upgrade
   when: os_gui=="kde"
   
 - name: Install Xfce Desktop
