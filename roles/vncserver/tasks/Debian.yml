@@ -8,12 +8,11 @@
 
 - name: Install KDE Desktop
   shell: |
-    add-apt-repository ppa:kubuntu-ppa/backports
-    apt update && upgrade
-    apt install plasma-desktop
+    add-apt-repository ppa:kubuntu-ppa/backports -y
+    apt update && apt upgrade -y
+    apt install plasma-desktop -y
     apt install kde-full
     apt install kde-standard
-    apt full-upgrade
   when: os_gui=="kde"
   
 - name: Install Xfce Desktop
