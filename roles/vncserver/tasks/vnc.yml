@@ -17,12 +17,6 @@
       line:  'tty -s && mesg n || true'
       backrefs: yes
 
-  - name: Change postgresql databases directory
-    lineinfile:
-      dest: 
-      regexp: "data_directory = '/var/lib/postgresql/{{postgresql_version}}/main'"
-      line: "data_directory = '/data/pgsql'"
-
   - name: Create a random password for VNC
     set_fact: temp_password="{{ lookup('password', '/tmp/passwordfile length=8 chars=digits') }}"
 
