@@ -1,6 +1,6 @@
 - name: Install GNOME Desktop
   shell: |
-    apt-get install gdm
+    apt-get install gdm -y
     apt-get install gnome-session-flashback -y
     apt install ubuntu-desktop gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal -y
     dpkg-reconfigure gdm
@@ -8,11 +8,8 @@
 
 - name: Install KDE Desktop
   shell: |
-    apt install software-properties-common
-    add-apt-repository ppa:kubuntu-ppa/backports -y
-    apt-get update
     apt install sddm -y
-    apt-get install kubuntu-desktop -y
+    tasksel install kubuntu-desktop -y
     dpkg-reconfigure sddm
   when: os_gui=="kde"
   

@@ -7,10 +7,7 @@
   
   - name: Install VNC Server on {{ansible_os_family}}
     apt:
-      pkg:
-        - tigervnc-standalone-server
-        - tigervnc-common
-        - tigervnc-xorg-extension
+      name: tightvncserver
     when: ansible_os_family == "Debian"
 
   - name: Create a random password for VNC
@@ -29,20 +26,6 @@
         "Password": "{{temp_password}}"
         "Verify": "{{temp_password}}"
         "view-only": "n"
-
-# copy config and xstartup on ubuntu
-- name: Copy vncserver config
-  copy:
-    src:  config
-    dest: $HOME/.vnc/config
-  when: ansible_os_family == "Debian"
-
-- name: Copy vncserver xstartup
-  copy:
-    src: xstartup
-    dest: $HOME/.vnc/xstartup
-    mode: 750
-  when: ansible_os_family == "Debian"
 
 # vncserver configure
 - name: Copy vncserver.service(when system_user=root) 
