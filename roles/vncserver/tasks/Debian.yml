@@ -3,7 +3,6 @@
     apt-get install gdm -y
     apt-get install gnome-session-flashback -y
     apt install ubuntu-desktop gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal -y
-    dpkg-reconfigure gdm
   when: os_gui=="gnome"
 
 - name: Install KDE Desktop
