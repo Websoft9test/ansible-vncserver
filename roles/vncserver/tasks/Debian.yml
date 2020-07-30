@@ -9,8 +9,8 @@
 - name: Install KDE Desktop
   shell: |
     apt install sddm -y
-    tasksel install kubuntu-desktop -y
     dpkg-reconfigure sddm
+    tasksel install kubuntu-desktop -y
   when: os_gui=="kde"
   
 - name: Install Xfce Desktop
