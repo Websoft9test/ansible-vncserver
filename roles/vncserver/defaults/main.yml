@@ -1,6 +1,6 @@
   
 # Install default GUI, gnome,kde
-os_gui: gnome
+os_gui: kde
 
 # vnc or remote
 os_connection: vnc
