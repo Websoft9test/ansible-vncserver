@@ -2,7 +2,7 @@
 - block:
   - name: Install VNC Server on {{ansible_os_family}}
     yum:
-      name: tigervncserver
+      name: tigervnc
     when: ansible_os_family == "RedHat"
   
   - name: Install VNC Server on {{ansible_os_family}}
