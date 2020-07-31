@@ -19,8 +19,7 @@
   lineinfile:
     dest: /etc/pam.d/sddm
     regexp: 'auth    required        pam_succeed_if.so user != root quiet_success'
-    line: '#auth    required        pam_succeed_if.so user != root quiet_success'
-    backrefs: yes
+    state: absent
    when: os_gui=="kde"
 
 - name: Install Xfce Desktop
