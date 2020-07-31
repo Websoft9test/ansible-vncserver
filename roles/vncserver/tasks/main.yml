@@ -3,6 +3,7 @@
 
 - name: Install VNC server and configure it
   include: vnc.yml
+  when: os_connection == 'vnc'
 
 - name: Install remote xrdp server 
   include: remote.yml
