@@ -6,7 +6,7 @@
     apt install ubuntu-desktop gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal -y
   when: os_gui=="gnome"
 
-- name:
+- name: 
   shell: |
     touch .xsession
     echo gnome-session > ~/.xsession
