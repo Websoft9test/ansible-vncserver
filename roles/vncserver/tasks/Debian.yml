@@ -28,11 +28,11 @@
   when: os_gui=="xfce"
 
 - name: Clear Warning message
-    lineinfile:
-      dest: /root/.profile
-      regexp: 'mesg n || true'
-      line:  'tty -s && mesg n || true'
-      backrefs: yes
+  lineinfile:
+    dest: /root/.profile
+    regexp: 'mesg n || true'
+    line:  'tty -s && mesg n || true'
+    backrefs: yes
 
 - name: Config Desktop
   shell: |
