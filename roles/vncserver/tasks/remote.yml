@@ -12,3 +12,9 @@
       systemctl start xrdp
       systemctl enable xrdp
     when: ansible_os_family == "Debian"
+
+# check service state
+  - name: Check xrdp Service
+    shell: systemctl status xrdp | grep Active*
+    register: check_xrdp_service
+    notify: check_xrdp_service
