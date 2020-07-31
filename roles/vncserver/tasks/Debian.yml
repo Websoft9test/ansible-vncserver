@@ -6,6 +6,26 @@
     apt install ubuntu-desktop gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal -y
   when: os_gui=="gnome"
 
+- name:
+  shell: |
+    touch .xsession
+    echo gnome-session > ~/.xsession
+  when: os_gui=="gnome"  
+
+- name: Allow root login
+  lineinfile:
+    dest: /etc/pam.d/gdm-autologin
+    regexp: 'auth   required        pam_succeed_if.so user != root quiet_success'
+    state: absent
+  when: os_gui=="gnome"
+
+- name: Allow root login
+  lineinfile:
+    dest: /etc/pam.d/gdm-password
+    regexp: 'auth    required        pam_succeed_if.so user != root quiet_success'
+    state: absent
+  when: os_gui=="gnome"
+
 - name: Install KDE Desktop
   shell: |
     add-apt-repository ppa:kubuntu-ppa/backports -y
@@ -13,6 +33,7 @@
     apt install plasma-desktop -y
     apt install kde-full -y
     apt install kde-standard -y
+    apt install kde-plasma-desktop
   when: os_gui=="kde"
   
 - name: Allow root login
