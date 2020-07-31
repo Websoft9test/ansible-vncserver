@@ -10,14 +10,6 @@
       name: tightvncserver
     when: ansible_os_family == "Debian"
 
-  - name: Change tty
-    lineinfile:
-      dest: /root/.profile
-      regexp: 'mesg n || true'
-      line:  'tty -s && mesg n || true'
-      backrefs: yes
-    when: ansible_os_family == "Debian"
-    
   - name: Create a random password for VNC
     set_fact: temp_password="{{ lookup('password', '/tmp/passwordfile length=8 chars=digits') }}"
 

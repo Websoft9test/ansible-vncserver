@@ -27,6 +27,13 @@
     apt install xfce4 xfce4-goodies -y
   when: os_gui=="xfce"
 
+- name: Clear Warning message
+    lineinfile:
+      dest: /root/.profile
+      regexp: 'mesg n || true'
+      line:  'tty -s && mesg n || true'
+      backrefs: yes
+
 - name: Config Desktop
   shell: |
     systemctl set-default graphical.target
