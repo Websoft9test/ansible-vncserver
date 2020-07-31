@@ -3,7 +3,7 @@
     shell: yum install xrdp -y
     when: ansible_os_family == "RedHat"
 
-  - name: Install VNC Server on {{ansible_os_family}}
+  - name: Install Remote toolon {{ansible_os_family}}
     shell: apt install xrdp -y
     when: ansible_os_family == "Debian"
 
