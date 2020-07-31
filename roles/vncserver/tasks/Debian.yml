@@ -6,12 +6,6 @@
     apt install ubuntu-desktop gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal -y
   when: os_gui=="gnome"
 
-- name: 
-  shell: |
-    touch .xsession
-    echo gnome-session > ~/.xsession
-  when: os_gui=="gnome"  
-
 - name: Allow root login
   lineinfile:
     dest: /etc/pam.d/gdm-autologin
