@@ -15,6 +15,14 @@
     apt install kde-standard -y
   when: os_gui=="kde"
   
+- name: Allow root login
+  lineinfile:
+    dest: /etc/pam.d/sddm
+    regexp: 'auth    required        pam_succeed_if.so user != root quiet_success'
+    line: '#auth    required        pam_succeed_if.so user != root quiet_success'
+    backrefs: yes
+   when: os_gui=="kde"
+
 - name: Install Xfce Desktop
   shell: |
     apt install xfce4 xfce4-goodies -y

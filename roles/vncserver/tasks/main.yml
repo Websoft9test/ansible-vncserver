@@ -8,3 +8,4 @@
 - name: Install remote xrdp server 
   include: remote.yml
   when: os_connection == 'remote'
+
