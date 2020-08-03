@@ -22,12 +22,13 @@
 
 - name: Install KDE Desktop
   shell: |
+    apt install software-properties-common -y
     add-apt-repository ppa:kubuntu-ppa/backports -y
     apt update && apt upgrade -y
     apt install plasma-desktop -y
+    apt install plasma-desktop -y
     apt install kde-full -y
     apt install kde-standard -y
-    apt install kde-plasma-desktop
   when: os_gui=="kde"
   
 - name: Allow root login
