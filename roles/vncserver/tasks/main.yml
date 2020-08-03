@@ -6,7 +6,6 @@
   when: os_connection=="vnc"
 
 - name: Install remote xrdp server 
-  include: vnc.yml
   include: remote.yml
   when: os_connection=="remote"
 
