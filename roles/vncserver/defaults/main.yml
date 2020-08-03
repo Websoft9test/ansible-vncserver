@@ -3,4 +3,4 @@
 os_gui: gnome
 
 # vnc or remote
-os_connection: remote
+os_connection: vnc
